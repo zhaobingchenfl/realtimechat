@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "429302170673.dkr.ecr.us-east-2.amazonaws.com/zchen-test:latest"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 3000,
+      "HostPort": 8000
+    }
+  ]
+}

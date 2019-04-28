@@ -42,7 +42,6 @@ pipeline {
         }
 
         stage("Choose Registry") {
-            agent any
  
             steps {
                 script {
@@ -98,6 +97,14 @@ pipeline {
         stage('Remove unused image') {
             steps {
                sh "docker rmi $repository:$BUILD_NUMBER"
+            }
+        }
+
+        stage('Deply docker image to beanstalk')
+            steps {
+                sh 'cd ebapp'
+                sh 'eb init -p docker zchen-eb-docker'
+                sh 'eb deploy -region us-east-2 ZchenEbDocker-env'
             }
         }
     }
