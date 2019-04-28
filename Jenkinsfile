@@ -16,16 +16,20 @@ pipeline {
         dockerImage = ''
     }
 
-    agent {
-        docker {
-           image 'node:10-alpine'
-           args '-u 0:0'
-        }
-    }
     
+    agent any
+
     stages {
 
         stage('Build') {
+
+            agent {
+                docker {
+                   image 'node:10-alpine'
+                   args '-u 0:0'
+                }  
+            }
+
             steps {
                 sh 'npm install'
             }
@@ -38,6 +42,7 @@ pipeline {
         }
 
         stage("Choose Registry") {
+            agent any
  
             steps {
                 script {
@@ -75,6 +80,7 @@ pipeline {
         }
         
         stage('Push image') {
+
             steps {
                 script {
                     /* Finally, we'll push the image with two tags:
