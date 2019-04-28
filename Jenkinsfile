@@ -69,7 +69,6 @@ pipeline {
                 script {
                     /* This builds the actual image; synonymous to
                      * docker build on the command line */
-                    set -x
                     dockerImage = docker.build(repository + ":$BUILD_NUMBER")
                 }
             }
