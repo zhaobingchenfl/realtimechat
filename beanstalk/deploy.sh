@@ -5,6 +5,8 @@ cp beanstalk/Dockerrun.aws.json beanstalk/app/
 cd beanstalk/app
 
 set -x
+sudo usermod -a -G ec2-user jenkins
+
 export PATH=$PATH:/home/ec2-user/.local/bin
 
 echo $PATH
