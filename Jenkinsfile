@@ -102,7 +102,7 @@ pipeline {
 
         stage('Deply docker image to beanstalk') {
             steps {
-                sh './beanstalk/scripts/deploy.sh'
+               sh label: '', script: 'beanstalk/deploy.sh' 
             }
         }
     }
