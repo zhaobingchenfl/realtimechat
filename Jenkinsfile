@@ -100,7 +100,7 @@ pipeline {
             }
         }
 
-        stage('Deply docker image to beanstalk')
+        stage('Deply docker image to beanstalk') {
             steps {
                 sh 'cd beanstalk'
                 sh 'eb init -p docker zchen-eb-docker'
