@@ -102,9 +102,7 @@ pipeline {
 
         stage('Deply docker image to beanstalk') {
             steps {
-                sh 'cd beanstalk'
-                sh 'eb init -p docker zchen-eb-docker'
-                sh 'eb deploy -region us-east-2 ZchenEbDocker-env'
+                sh './beanstalk/scripts/deploy.sh'
             }
         }
     }
