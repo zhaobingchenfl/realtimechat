@@ -2,12 +2,12 @@ pipeline {
     environment {
         /* Public Docker Hub */
         dockerHubRegistry = 'https://registry.hub.docker.com'
-        dockerHubRegistryCredential = 'docker-hub-credentials'
+        dockerHubRegistryCredential = 'docker-hub-credential'
         dockerHubRepository = 'zhaobingchen/test'
 
         /* Amazon ECR */
         amazonEcrRegistry = 'https://429302170673.dkr.ecr.us-east-2.amazonaws.com'
-        amazonEcrRegistryCredential = 'ecr:us-east-2:ecr-credentials'
+        amazonEcrRegistryCredential = 'ecr:us-east-2:ecr-credential'
         amazonEcrRepository = 'zchen-test'
         
         registry = ''
