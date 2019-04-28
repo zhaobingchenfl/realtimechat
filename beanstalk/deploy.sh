@@ -12,6 +12,7 @@ export PATH=$PATH:/home/ec2-user/.local/bin
 echo $PATH
 echo $PWD
 
+aws --version
 eb init -p docker zchen-eb-docker
 eb deploy ZchenEbDocker-env --region us-east-2
 
