@@ -4,16 +4,19 @@ pipeline {
         dockerHubRegistry = 'https://registry.hub.docker.com'
         dockerHubRegistryCredential = 'docker-hub-credential'
         dockerHubRepository = 'zhaobingchen/test'
+        dockerHubPrefix = 'registry.hub.docker.com/'
 
         /* Amazon ECR */
         amazonEcrRegistry = 'https://429302170673.dkr.ecr.us-east-2.amazonaws.com'
         amazonEcrRegistryCredential = 'ecr:us-east-2:ecr-credential'
         amazonEcrRepository = 'zchen-test'
+        amazonEcrPrefix = '429302170673.dkr.ecr.us-east-2.amazonaws.com/'
         
         registry = ''
         registryCredential = ''
         repository = ''
         dockerImage = ''
+        registryPrefix = ''
     }
 
     
@@ -59,10 +62,12 @@ pipeline {
                         registry = dockerHubRegistry
                         registryCredential = dockerHubRegistryCredential
                         repository = dockerHubRepository
+                        registryPrefix = dockerHubPrefix
                     } else {
                         registry = amazonEcrRegistry
                         registryCredential = amazonEcrRegistryCredential
                         repository = amazonEcrRepository
+                        registryPrefix = amazonEcrPrefix
                     }
                 }
             }
@@ -102,7 +107,12 @@ pipeline {
 
         stage('Deply docker image to beanstalk') {
             steps {
-               sh label: '', script: './beanstalk/deploy.sh' 
+               sh "mkdir -p beanstalk-app"
+               sh "sed \"s|DOCKER_IMAGE|$registryPrefix$repository:$BUILD_NUMBER|g\" Dockerrun.aws.json > beanstalk-app/Dockerrun.aws.json"
+               sh "cd beanstalk-app"
+               sh "eb init -p docker zchen-eb-docker"
+               sh "eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER"
+               sh "rm -rf beanstalk-app"
             }
         }
     }
