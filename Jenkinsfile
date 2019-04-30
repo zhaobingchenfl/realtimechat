@@ -107,14 +107,15 @@ pipeline {
 
         stage('Deply docker image to beanstalk') {
             steps {
-               sh "mkdir -p beanstalk-app"
-               sh "sed \"s|DOCKER_IMAGE|$registryPrefix$repository:$BUILD_NUMBER|g\" Dockerrun.aws.json > beanstalk-app/Dockerrun.aws.json"
-               sh "cd beanstalk-app"
-               sh "export PATH=$PATH:/home/ec2-user/.local/bin"
-               sh "export PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages"
-               sh "/home/ec2-user/.local/bin/eb init -p docker zchen-eb-docker"
-               sh "/home/ec2-user/.local/bin/eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER"
-               sh "rm -rf beanstalk-app"
+sh label: '', script: '''mkdir -p beanstalk-app
+sed \\"s|DOCKER_IMAGE|$registryPrefix$repository:$BUILD_NUMBER|g\\" Dockerrun.aws.json > beanstalk-app/Dockerrun.aws.json
+cd beanstalk-app
+PATH=$PATH:/home/ec2-user/.local/bin
+PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages
+eb init -p docker zchen-eb-docker
+eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER
+rm -rf beanstalk-app
+'''
             }
         }
     }
