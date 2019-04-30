@@ -112,8 +112,8 @@ pipeline {
                sh "cd beanstalk-app"
                sh "export PATH=$PATH:/home/ec2-user/.local/bin"
                sh "export PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages"
-               sh "eb init -p docker zchen-eb-docker"
-               sh "eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER"
+               sh "/home/ec2-user/.local/bin/eb init -p docker zchen-eb-docker"
+               sh "/home/ec2-user/.local/bin/eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER"
                sh "rm -rf beanstalk-app"
             }
         }
