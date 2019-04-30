@@ -111,7 +111,7 @@ sh label: '', script: '''mkdir -p beanstalk-app
 sed "s|DOCKER_IMAGE|$registryPrefix$repository:$BUILD_NUMBER|g" Dockerrun.aws.json > beanstalk-app/Dockerrun.aws.json
 cd beanstalk-app
 PATH=$PATH:/home/ec2-user/.local/bin
-PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages
+export PYTHONPATH=/home/ec2-user/.local/lib/python3.7/site-packages
 eb init -p docker zchen-eb-docker
 eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER
 rm -rf beanstalk-app
