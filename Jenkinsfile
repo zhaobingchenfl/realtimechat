@@ -110,6 +110,7 @@ pipeline {
                sh "mkdir -p beanstalk-app"
                sh "sed \"s|DOCKER_IMAGE|$registryPrefix$repository:$BUILD_NUMBER|g\" Dockerrun.aws.json > beanstalk-app/Dockerrun.aws.json"
                sh "cd beanstalk-app"
+               sh "PATH=$PATH:/home/ec2-user/.local/bin:/home/ec2-user/.local/lib/python3.7/site-packages"
                sh "eb init -p docker zchen-eb-docker"
                sh "eb deploy ZchenEbDocker-env --region us-east-2 --label RealTimeChat:$BUILD_NUMBER"
                sh "rm -rf beanstalk-app"
